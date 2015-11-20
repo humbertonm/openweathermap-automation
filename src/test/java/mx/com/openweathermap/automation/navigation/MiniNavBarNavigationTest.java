@@ -25,4 +25,34 @@ public class MiniNavBarNavigationTest extends SeleniumPropertiesSetUpTest{
     Assert.assertEquals(weatherInYourCityUrl, driver.getCurrentUrl());
   }
 
+  @Test
+  public void verifyNavigationToSignIn(){
+    final String weatherInYourCityUrl = "http://home.openweathermap.org/users/sign_in";
+    miniNavBar = new MiniNavBar(driver);
+
+    miniNavBar.navigateToSignIn();
+
+    Assert.assertEquals(weatherInYourCityUrl, driver.getCurrentUrl());
+  }
+
+  @Test
+  public void verifyNavigationToSignUp(){
+    final String weatherInYourCityUrl = "http://home.openweathermap.org/users/sign_up";
+    miniNavBar = new MiniNavBar(driver);
+
+    miniNavBar.navigateToSignUp();
+
+    Assert.assertEquals(weatherInYourCityUrl, driver.getCurrentUrl());
+  }
+
+  @Test
+  public void verifyNavigationToEmailUs(){
+    final String weatherInYourCityUrl = "https://openweathermap.desk.com/customer/portal/emails/new?t=535697";
+    miniNavBar = new MiniNavBar(driver);
+
+    miniNavBar.navigateToEmailUs();
+
+    Assert.assertEquals(weatherInYourCityUrl, driver.getCurrentUrl());
+  }
+
 }

@@ -31,23 +31,35 @@ public class SeleniumPropertiesSetUpTest {
   protected WebDriver driver;
   protected Date date = new Date();
 
+  private String failDir;
+
   @Rule
   public TestRule testWatcher = new TestWatcher() {
     @Override
     public void failed(Throwable t, Description test) {
 
       SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-      String screenshotName = test.getClassName()+"/"+test.getMethodName()+"/"+sdf.format(date) + ".png";
-      File snapshot = new File(screenshotName);
-      snapshot.mkdirs();
+      String screenshotDir = failDir+"/"+test.getClassName()+"/"+test.getMethodName()+"/";
+      String screenshotName = screenshotDir + sdf.format(date) + ".png";
+      File screenshotDirFile = new File(screenshotDir);
+      LOG.debug("creating directory: {}", screenshotDirFile.getAbsolutePath());
+      screenshotDirFile.mkdirs();
+
+      File screenshot = new File(screenshotName);
+
       if (driver instanceof TakesScreenshot) {
-        File tempFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
         try {
-          FileUtils.copyFile(tempFile, snapshot);
-        } catch (IOException e) {
-          LOG.error("ERROR CREATING FILE: {}", snapshot.getAbsolutePath(), e);
+          File tempFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+          LOG.debug("tmpFile: {}", tempFile.getAbsolutePath());
+
+          FileUtils.copyFile(tempFile, screenshot);
+        } catch (Exception e) {
+          LOG.error("ERROR CREATING FILE: {}", screenshot.getAbsolutePath(), e);
         }
+      }else{
+        LOG.info("Screenshot not supported");
       }
+
     }
   };
 
@@ -57,12 +69,13 @@ public class SeleniumPropertiesSetUpTest {
     ResourceBundle bundle = ResourceBundle.getBundle("openweathermap");
     String browser = bundle.getString("browser");
     String url = bundle.getString("url");
+    this.failDir = bundle.getString("fail.screenshots.dir");
 
     driver = WebDriverFactoy.createDriver(browser);
 
-    driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-    driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
-    driver.manage().timeouts().setScriptTimeout(10, TimeUnit.SECONDS);
+    driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+    driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+    driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
 
     driver.get(url);
 
@@ -70,7 +83,9 @@ public class SeleniumPropertiesSetUpTest {
 
   @After
   public void closeDriver(){
-    driver.close();
+    for(String winHandle: driver.getWindowHandles()){
+      driver.switchTo().window(winHandle).close();
+    }
   }
 
 
