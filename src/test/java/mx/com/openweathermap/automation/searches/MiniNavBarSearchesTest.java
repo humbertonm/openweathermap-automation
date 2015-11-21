@@ -14,12 +14,10 @@ import java.util.List;
  */
 public class MiniNavBarSearchesTest extends SeleniumPropertiesSetUpTest{
 
-  private MiniNavBar miniNavBar;
-
   @Test
-  public void verifySearch(){
+  public void verifySearchWithSimpleResult(){
     final String city = "Mexico city";
-    miniNavBar = new MiniNavBar(driver);
+    MiniNavBar miniNavBar = new MiniNavBar(driver);
 
     miniNavBar.searchWeatherInYourCity(city);
     SearchResultsPage searchResultsPage = new SearchResultsPage(driver);
@@ -27,8 +25,49 @@ public class MiniNavBarSearchesTest extends SeleniumPropertiesSetUpTest{
 
     Assert.assertFalse(results.isEmpty());
     Assert.assertEquals(1, results.size());
-    WeatherInYourCityResult result = results.get(0);
 
+    compareWeatherResults(results.get(0),generateTestDataFromMexicoCity());
 
   }
+
+  private void compareWeatherResults(WeatherInYourCityResult result, WeatherInYourCityResult expected) {
+    Assert.assertEquals(expected.getCityName(), result.getCityName());
+    Assert.assertEquals(expected.getFlagImageSource(),result.getFlagImageSource());
+    Assert.assertEquals(expected.getGeoCoords(),result.getGeoCoords());
+  }
+
+  @Test
+  public void verifySearchWithMultipleResults(){
+    final String city = "Mexico";
+    MiniNavBar miniNavBar = new MiniNavBar(driver);
+
+    miniNavBar.searchWeatherInYourCity(city);
+    SearchResultsPage searchResultsPage = new SearchResultsPage(driver);
+    List<WeatherInYourCityResult> results = searchResultsPage.getSearchResults();
+
+    Assert.assertFalse(results.isEmpty());
+    Assert.assertEquals(2, results.size());
+    compareWeatherResults(results.get(0),generateTestDataFromMexicoCity());
+    compareWeatherResults(results.get(1),generateTestDataFromMexicoPH());
+
+  }
+
+
+  private WeatherInYourCityResult generateTestDataFromMexicoCity(){
+    WeatherInYourCityResult result = new WeatherInYourCityResult();
+    result.setCityName("Mexico City, MX");
+    result.setFlagImageSource("http://openweathermap.org/images/flags/mx.png");
+    result.setGeoCoords("[ -99.127663, 19.428471 ]");
+    return result;
+  }
+
+  private WeatherInYourCityResult generateTestDataFromMexicoPH(){
+    WeatherInYourCityResult result = new WeatherInYourCityResult();
+    result.setCityName("Mexico, PH");
+    result.setFlagImageSource("http://openweathermap.org/images/flags/ph.png");
+    result.setGeoCoords("[ 120.719803, 15.0646 ]");
+    return result;
+  }
+
+
 }

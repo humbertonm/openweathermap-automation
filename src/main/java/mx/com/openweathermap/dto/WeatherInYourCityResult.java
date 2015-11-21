@@ -85,4 +85,49 @@ public class WeatherInYourCityResult {
   public void setGeoCoords(String geoCoords) {
     this.geoCoords = geoCoords;
   }
+
+  @Override
+  public String toString() {
+    return "WeatherInYourCityResult{" +
+        "weatherImageSource='" + weatherImageSource + '\'' +
+        ", cityName='" + cityName + '\'' +
+        ", cityLink='" + cityLink + '\'' +
+        ", flagImageSource='" + flagImageSource + '\'' +
+        ", weatherShortDescription='" + weatherShortDescription + '\'' +
+        ", temperature='" + temperature + '\'' +
+        ", weatherDescription='" + weatherDescription + '\'' +
+        ", geoCoords='" + geoCoords + '\'' +
+        '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    WeatherInYourCityResult that = (WeatherInYourCityResult) o;
+
+    if (!weatherImageSource.equals(that.weatherImageSource)) return false;
+    if (!cityName.equals(that.cityName)) return false;
+    if (!cityLink.equals(that.cityLink)) return false;
+    if (!flagImageSource.equals(that.flagImageSource)) return false;
+    if (!weatherShortDescription.equals(that.weatherShortDescription)) return false;
+    if (!temperature.equals(that.temperature)) return false;
+    if (!weatherDescription.equals(that.weatherDescription)) return false;
+    return geoCoords.equals(that.geoCoords);
+
+  }
+
+  @Override
+  public int hashCode() {
+    int result = weatherImageSource.hashCode();
+    result = 31 * result + cityName.hashCode();
+    result = 31 * result + cityLink.hashCode();
+    result = 31 * result + flagImageSource.hashCode();
+    result = 31 * result + weatherShortDescription.hashCode();
+    result = 31 * result + temperature.hashCode();
+    result = 31 * result + weatherDescription.hashCode();
+    result = 31 * result + geoCoords.hashCode();
+    return result;
+  }
 }
