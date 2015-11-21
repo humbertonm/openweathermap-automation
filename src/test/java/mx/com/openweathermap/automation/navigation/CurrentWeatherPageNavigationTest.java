@@ -7,7 +7,7 @@ import org.junit.Test;
 /**
  * Created by beto on 17/11/15.
  */
-public class CurrentNavigationTest extends SeleniumPropertiesSetUpTest{
+public class CurrentWeatherPageNavigationTest extends SeleniumPropertiesSetUpTest{
 
 
   @Test

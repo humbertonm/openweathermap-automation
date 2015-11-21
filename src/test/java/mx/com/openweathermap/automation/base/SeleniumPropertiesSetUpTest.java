@@ -66,7 +66,7 @@ public class SeleniumPropertiesSetUpTest {
 
   @Before
   public void setUpDriver(){
-    ResourceBundle bundle = ResourceBundle.getBundle("openweathermap");
+    ResourceBundle bundle = ResourceBundle.getBundle("setUpTest");
     String browser = bundle.getString("browser");
     String url = bundle.getString("url");
     this.failDir = bundle.getString("fail.screenshots.dir");
