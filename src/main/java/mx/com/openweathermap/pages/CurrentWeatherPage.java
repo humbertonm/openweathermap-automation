@@ -2,9 +2,8 @@ package mx.com.openweathermap.pages;
 
 import mx.com.openweathermap.components.MiniNavBar;
 import mx.com.openweathermap.dto.IndexItem;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import mx.com.openweathermap.dto.IndexLinkName;
+import org.openqa.selenium.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,6 +64,22 @@ public class CurrentWeatherPage {
       items.add(titleItem);
     }
     return items;
+  }
+
+  public void clickOnIndexLinkName(IndexLinkName indexLinkName){
+    WebElement indexContainerElement = driver.findElement(indexContainer);
+    indexContainerElement.findElement(By.linkText(indexLinkName.getIndexLinkName())).click();
+  }
+
+  public boolean findSection(IndexLinkName indexLinkName){
+    try {
+      driver.findElement(By.id(indexLinkName.getSection()));
+      return true;
+    }catch (NoSuchElementException | TimeoutException e){
+      return false;
+    }
+
+
   }
 
 }
