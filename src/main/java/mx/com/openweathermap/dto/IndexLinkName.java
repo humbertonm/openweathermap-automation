@@ -42,4 +42,12 @@ public enum IndexLinkName {
   public String getSection() {
     return section;
   }
+
+  @Override
+  public String toString() {
+    return "IndexLinkName{" +
+            "indexLinkName='" + indexLinkName + '\'' +
+            ", section='" + section + '\'' +
+            '}';
+  }
 }

@@ -30,6 +30,7 @@ public class SeleniumPropertiesSetUpTest {
 
   protected WebDriver driver;
   protected Date date = new Date();
+  protected String initURL;
 
   private String failDir;
 
@@ -68,7 +69,7 @@ public class SeleniumPropertiesSetUpTest {
   public void setUpDriver(){
     ResourceBundle bundle = ResourceBundle.getBundle("setUpTest");
     String browser = bundle.getString("browser");
-    String url = bundle.getString("url");
+    initURL = bundle.getString("url");
     this.failDir = bundle.getString("fail.screenshots.dir");
 
     driver = WebDriverFactoy.createDriver(browser);
@@ -77,7 +78,7 @@ public class SeleniumPropertiesSetUpTest {
     driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
     driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
 
-    driver.get(url);
+    driver.get(initURL);
 
   }
 

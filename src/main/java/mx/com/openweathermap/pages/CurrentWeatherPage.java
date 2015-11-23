@@ -4,6 +4,7 @@ import mx.com.openweathermap.components.MiniNavBar;
 import mx.com.openweathermap.dto.IndexItem;
 import mx.com.openweathermap.dto.IndexLinkName;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,7 +69,12 @@ public class CurrentWeatherPage {
 
   public void clickOnIndexLinkName(IndexLinkName indexLinkName){
     WebElement indexContainerElement = driver.findElement(indexContainer);
-    indexContainerElement.findElement(By.linkText(indexLinkName.getIndexLinkName())).click();
+    WebElement link = indexContainerElement.findElement(By.linkText(indexLinkName.getIndexLinkName()));
+    WebElement superiorDescElement = driver.findElement(superiorDesc);
+    //Move to container for link visible. In other case, try to click the link but click another menu.
+    new Actions(driver).moveToElement(superiorDescElement).perform();
+    LOG.debug("Link: {}, Displayed: {}",indexLinkName.getIndexLinkName(), link.isDisplayed());
+    link.click();
   }
 
   public boolean findSection(IndexLinkName indexLinkName){
