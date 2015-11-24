@@ -14,24 +14,27 @@ public class MiniNavBar {
   private static Logger LOG = LoggerFactory.getLogger(MiniNavBar.class);
 
   private WebDriver driver;
-  private By emailLink = By.linkText("Email Us");
-  private By weatherInYourCityLink = By.linkText("Weather in your city");
-  private By singInLink = By.partialLinkText("Sign In");
-  private By singUpLink = By.partialLinkText("Sign Up");
-  private By unitsInput = By.id("units_check");
-  private By searchInput = By.id("q");
-  private By findButton = By.xpath("//form[@id='nav-search-form']//button[@type='submit']");
+  private final By miniNavBarContainer = By.xpath("//div[@class='mini-navbar mini-navbar-dark hidden-xs']");
+  private final By emailLink = By.linkText("Email Us");
+  private final By weatherInYourCityLink = By.id("nav-search");
+  private final By singInLink = By.partialLinkText("Sign In");
+  private final By singUpLink = By.partialLinkText("Sign Up");
+  private final By unitsInput = By.id("units_check");
+  private final By searchInput = By.id("q");
+  private final By findButton = By.xpath("//form[@id='nav-search-form']//button[@type='submit']");
 
   public MiniNavBar(WebDriver driver){
     this.driver = driver;
   }
 
   public void searchWeatherInYourCity(String city){
-    driver.findElement(weatherInYourCityLink).click();
-    WebElement search = driver.findElement(searchInput);
+    WebElement container = driver.findElement(miniNavBarContainer);
+    WebElement weatherLinkElement = container.findElement(weatherInYourCityLink);
+    weatherLinkElement.click();
+    WebElement search = container.findElement(searchInput);
     search.clear();
     search.sendKeys(city);
-    driver.findElement(findButton).click();
+    container.findElement(findButton).click();
 
   }
 

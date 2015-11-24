@@ -60,7 +60,12 @@ public class SeleniumPropertiesSetUpTest {
       }else{
         LOG.info("Screenshot not supported");
       }
+    }
 
+    @Override
+    protected void finished(Description description) {
+      LOG.debug("finish {}", description);
+      closeDriver();
     }
   };
 
@@ -82,9 +87,10 @@ public class SeleniumPropertiesSetUpTest {
 
   }
 
-  @After
+  //@After
   public void closeDriver(){
     for(String winHandle: driver.getWindowHandles()){
+      LOG.debug("closing window: {}",winHandle);
       driver.switchTo().window(winHandle).close();
     }
   }

@@ -10,32 +10,35 @@ public class NavBar {
 
   private WebDriver driver;
 
-  private By openWeatherMapLink = By.partialLinkText("OpenWeatherMap");
-  private By homeLink = By.linkText("Home");
-  private By weatherLink = By.linkText("Weather");
-  private By mapsDropdown = By.partialLinkText("Maps");
+  private final By openWeatherMapLink = By.partialLinkText("OpenWeatherMap");
+  private final By homeLink = By.linkText("Home");
+  private final By weatherLink = By.linkText("Weather");
+  private final By mapsDropdown = By.partialLinkText("Maps");
 
-  private By weatherMapsLink = By.linkText("Weather maps");
-  private By currentSatelliteMapsLink = By.linkText("Current satellite maps");
-  private By beautifulMapsLink = By.linkText("Beautiful maps");
+  private final By weatherMapsLink = By.linkText("Weather maps");
+  private final By currentSatelliteMapsLink = By.linkText("Current satellite maps");
+  private final By beautifulMapsLink = By.linkText("Beautiful maps");
 
-  private By apiLink = By.linkText("API");
-  private By priceLink = By.linkText("Price");
-  private By stationsLink = By.linkText("Stations");
-  private By newsLink = By.linkText("News");
+  private final By apiLink = By.linkText("API");
+  private final By priceLink = By.linkText("Price");
+  private final By stationsLink = By.linkText("Stations");
+  private final By newsLink = By.linkText("News");
 
-  private By aboutDropdown = By.partialLinkText("About");
-  private By aboutCompanyLink = By.linkText("About company");
-  private By owmPlatformLink = By.linkText("OWM Platform");
-  private By bigDataTechnologyLink = By.linkText("Big Data Technology");
-  private By meteorologicalModelsLink = By.linkText("Meteorological models");
-  private By dataSourcesLink = By.linkText("Data sources");
+  private final By aboutDropdown = By.partialLinkText("About");
+  private final By aboutCompanyLink = By.linkText("About company");
+  private final By owmPlatformLink = By.linkText("OWM Platform");
+  private final By bigDataTechnologyLink = By.linkText("Big Data Technology");
+  private final By meteorologicalModelsLink = By.linkText("Meteorological models");
+  private final By dataSourcesLink = By.linkText("Data sources");
 
 
   public NavBar(WebDriver driver){
     this.driver=driver;
   }
 
+  public void navigateToTitle(){
+    driver.findElement(openWeatherMapLink).click();
+  }
 
   public void navigateToHome(){
     driver.findElement(homeLink).click();
@@ -93,7 +96,7 @@ public class NavBar {
     driver.findElement(owmPlatformLink).click();
   }
 
-  public void navigateToBigDataTecnology(){
+  public void navigateToBigDataTechnology(){
     driver.findElement(aboutDropdown).click();
     driver.findElement(bigDataTechnologyLink).click();
   }
